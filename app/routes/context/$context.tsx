@@ -1,13 +1,17 @@
 import {JournalContextDetail} from "../../models/context.models";
-import {useLoaderData} from "remix";
+import {useLoaderData, LoaderFunction, redirect} from "remix";
 import Box from "@mui/material/Box";
 
 import ContextDetail from '~/features/contexts/context-detail'
 import {Paper} from "@mui/material";
 import {journalContextDetailsGenerator} from "../../mocks";
 
-export const loader = async () => {
-    return journalContextDetailsGenerator(5);
+import Api from '~/api/connection';
+import ContextService from '~/api/contexts.service';
+
+export const loader: LoaderFunction = async ({params}) => {
+    if(!params.context) return redirect('/dashboard');
+    return ContextService(Api.connect()).getDetail(params.context);
 }
 
 export default function Context() {

@@ -8,7 +8,7 @@ import {Form} from "@remix-run/react";
 import Box from "@mui/material/Box";
 
 const TaskForm: React.VoidFunctionComponent<PropsWithChildren<{ task: JournalTask }>> = ({task}) => {
-    const [date, setDate] = React.useState(new Date());
+    const [date, setDate] = React.useState<Date | string>('');
 
     const handleDateChange = (date: string | null) => {
         if (!date) return;
@@ -34,24 +34,24 @@ const TaskForm: React.VoidFunctionComponent<PropsWithChildren<{ task: JournalTas
                                 name='description'
                                 minRows={4}
                                 maxRows={8}
-                                value={task.description}
+                                value={task.description || ''}
                                 sx={{width: '100%'}}
-                                required
                             />
                             <Box sx={{display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '0.5em'}}>
                                 <DatePicker
-                                    label="Schedule"
-                                    value={date}
-
+                                    label="Schedule Day"
+                                    value={date || ''}
                                     onChange={handleDateChange}
-                                    renderInput={(params: any) => <TextField name='date' {...params} />}
+                                    renderInput={({required, ...params}: any) =>
+                                        <TextField {...params} name='date'/>}
                                 />
                                 <TimePicker
-                                    label="Schedule"
-                                    value={date}
+                                    label="Schedule Time"
+                                    value={date || ''}
                                     ampm={false}
                                     onChange={handleDateChange}
-                                    renderInput={(params: any) => <TextField {...params} />}
+                                    renderInput={({required, ...params}: any) =>
+                                        <TextField {...params}/>}
                                 />
                             </Box>
                             <Button type='submit' variant="outlined">Submit</Button>

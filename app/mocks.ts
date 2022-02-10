@@ -4,15 +4,17 @@ import {JournalTask} from "./models/tasks.models";
 
 
 export const journalTaskGenerator: () => JournalTask = () => ({
-    $id: faker.random.uuid(),
+    context: faker.datatype.uuid(),
+    $id: faker.datatype.uuid(),
     description: faker.lorem.paragraph(5),
     title: faker.lorem.sentence(3),
-    date: faker.date.future().toDateString()
+    date: faker.date.future().toDateString(),
+    completed: faker.datatype.boolean()
 })
 
 export const journalContextsGenerator: (tasks_q?: number) => JournalContext = (tasks_q = 0) => ({
     name: faker.lorem.sentence(5),
-    $id: faker.random.uuid(),
+    $id: faker.datatype.uuid(),
     tasks_q
 })
 
